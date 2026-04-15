@@ -300,6 +300,7 @@ function(a,b,c){if(!Vd(b))throw Error(n(200));return Wd(null,a,b,!1,c)};Q.unmoun
 })();
 
 
+    var _react = React;
     var useState = React.useState;
     var useCallback = React.useCallback;
     var useMemo = React.useMemo;
