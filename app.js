@@ -1,3 +1,7 @@
+(function() {
+var exports = {};
+var module = { exports: exports };
+
 /**
  * @license React
  * react.production.min.js
@@ -305,7 +309,7 @@ function(a,b,c){if(!Vd(b))throw Error(n(200));return Wd(null,a,b,!1,c)};Q.unmoun
     var useMemo = React.useMemo;
     var useRef = React.useRef;
 
-exports.default = App;
+
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -1964,3 +1968,5 @@ function App() {
   }, "Tabela CHM 2018 \xB7 UCO R$20,47 \xB7 Valores de conv\xEAnio s\xE3o estimativas"));
 }
     ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+
+})();
