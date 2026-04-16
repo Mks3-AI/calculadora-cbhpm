@@ -1286,7 +1286,7 @@ function Orcamento(_ref0) {
       marginTop: 8,
       width: "100%"
     }
-  }, "<- Voltar")));
+  }, "<- Voltar"));
 }
 
 // -- Calculadora ---------------------------------------------------------------
