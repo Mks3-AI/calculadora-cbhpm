@@ -413,36 +413,36 @@ var DB = DBR.map(function (r) {
 });
 var CONVS = [{
   id: 1,
-  nome: "Particular",
+  nome: "100% (Particular / sem deflator)",
   d: 1.00
 }, {
   id: 2,
-  nome: "Unimed",
-  d: 0.75
+  nome: "90%",
+  d: 0.90
 }, {
   id: 3,
-  nome: "SulAmérica",
-  d: 0.70
+  nome: "80%",
+  d: 0.80
 }, {
   id: 4,
-  nome: "Bradesco",
-  d: 0.70
+  nome: "75%",
+  d: 0.75
 }, {
   id: 5,
-  nome: "Amil",
-  d: 0.65
-}, {
-  id: 6,
-  nome: "Porto Seguro",
+  nome: "70%",
   d: 0.70
 }, {
-  id: 7,
-  nome: "NotreDame",
+  id: 6,
+  nome: "65%",
   d: 0.65
 }, {
+  id: 7,
+  nome: "60%",
+  d: 0.60
+}, {
   id: 8,
-  nome: "Cassi",
-  d: 0.80
+  nome: "50%",
+  d: 0.50
 }];
 var C = {
   bg: "#090d18",
@@ -869,6 +869,10 @@ function Orcamento(_ref0) {
     _useState8 = _slicedToArray(_useState7, 2),
     np = _useState8[0],
     setNp = _useState8[1];
+  var _useStateDesc = (0, _react.useState)(true),
+    _useStateDesc2 = _slicedToArray(_useStateDesc, 2),
+    showDesc = _useStateDesc2[0],
+    setShowDesc = _useStateDesc2[1];
   var vnum = parseFloat(vc.replace(",", ".")) || null;
   var desc = vnum && vnum < res.total ? res.total - vnum : 0;
   var copiar = function copiar() {
@@ -884,8 +888,12 @@ function Orcamento(_ref0) {
     L.push("\nPROCEDIMENTOS:");
     res.linhas.forEach(function (l) {
       var via = l.via ? " (" + l.via + ")" : "";
-      L.push("  " + l.codigo + " - " + l.descricao);
-      L.push("    Porte " + l.porte + via + " : " + brl(l.valor));
+      if (showDesc) {
+        L.push("  " + l.codigo + " - " + l.descricao);
+        L.push("    Porte " + l.porte + via + " : " + brl(l.valor));
+      } else {
+        L.push("  " + l.codigo + " - Porte " + l.porte + via + " : " + brl(l.valor));
+      }
     });
     L.push("\nEQUIPE:");
     L.push("  Cirurgião:      " + brl(res.tc));
@@ -985,7 +993,36 @@ function Orcamento(_ref0) {
       borderRadius: 8,
       border: "1px solid ".concat(C.green, "30")
     }
-  }, "v Desconto de ", /*#__PURE__*/React.createElement("strong", null, brl(desc)), " concedido"))), /*#__PURE__*/React.createElement(Card, {
+  }, "v Desconto de ", /*#__PURE__*/React.createElement("strong", null, brl(desc)), " concedido"))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
+      marginTop: 10,
+      padding: "10px 12px",
+      background: C.hi,
+      borderRadius: 8,
+      cursor: "pointer"
+    },
+    onClick: function onClick() { setShowDesc(function (v) { return !v; }); }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      width: 20,
+      height: 20,
+      borderRadius: 5,
+      border: "2px solid ".concat(showDesc ? C.teal : C.muted),
+      background: showDesc ? C.teal : "transparent",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontSize: 12,
+      color: "#fff",
+      fontWeight: 900,
+      flexShrink: 0
+    }
+  }, showDesc ? "v" : ""), /*#__PURE__*/React.createElement("div", {
+    style: { fontSize: 12.5, color: C.text }
+  }, "Incluir descritivo dos procedimentos no texto copiado"))), /*#__PURE__*/React.createElement(Card, {
     style: {
       border: "1px solid ".concat(C.gold, "30")
     }
@@ -1425,7 +1462,17 @@ function Calc(_ref10) {
       };
     });
     var iv = cfg.ins ? tc * 0.20 : 0;
-    var av = cfg.ane && princ.porteAnest !== null ? ((_AV$princ$porteAnest = AV[princ.porteAnest]) !== null && _AV$princ$porteAnest !== void 0 ? _AV$princ$porteAnest : 0) * fU * df : 0;
+    var av = 0;
+    if (cfg.ane && princ.porteAnest !== null) {
+      av = (AV[princ.porteAnest] || 0) * fA * fU * df;
+      procs.slice(1).forEach(function (p) {
+        var c = p.cid ? DB.find(function (x) { return x.id === p.cid; }) : null;
+        if (c && c.porteAnest !== null) {
+          var viaMult = p.via === "mesma" ? 0.5 : 0.7;
+          av += (AV[c.porteAnest] || 0) * viaMult * fA * fU * df;
+        }
+      });
+    }
     var total = tc + auxs.reduce(function (s, x) {
       return s + x.valor;
     }, 0) + iv + av;
@@ -1472,7 +1519,7 @@ function Calc(_ref10) {
         label: "".concat(c.nome, " - ").concat((c.d * 100).toFixed(0), "%")
       };
     }),
-    placeholder: "Particular / sem deflator (100%)"
+    placeholder: "Sem deflator (100%)"
   })), /*#__PURE__*/React.createElement(Card, null, /*#__PURE__*/React.createElement(Sec, null, "[proc] PROCEDIMENTOS (", procs.length, "/7)"), /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
@@ -1773,7 +1820,7 @@ function Convs(_ref11) {
         });
       });
     },
-    placeholder: "Nome do conv\xEAnio"
+    placeholder: "Nome ou descri\xE7\xE3o (ex: Unimed, Coparticipa\xE7\xE3o)"
   }), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 10.5,
