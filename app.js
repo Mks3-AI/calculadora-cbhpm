@@ -909,7 +909,7 @@ function Orcamento(_ref0) {
       if (desc > 0) L.push("Desconto concedido:  " + brl(desc));
     }
     L.push("================================");
-    L.push("Tabela CHM 2018 · Códigos TUSS para reembolso");
+    L.push("Valores estimados com base na CHM 2018. O reembolso final pode variar conforme as regras de cada convênio, seguradora, contrato ou instituição, não havendo garantia de equivalência com o valor efetivamente pago ou reembolsado.");
     (_navigator$clipboard = navigator.clipboard) === null || _navigator$clipboard === void 0 || _navigator$clipboard.writeText(L.join("\n"));
     alert("Copiado!");
   };
@@ -1269,7 +1269,7 @@ function Orcamento(_ref0) {
       textAlign: "center",
       lineHeight: 1.6
     }
-  }, "Honor\xE1rios calculados com base na Tabela CHM 2018", /*#__PURE__*/React.createElement("br", null), "Para reembolso: apresente este descritivo ao seu plano de sa\xFAde")), /*#__PURE__*/React.createElement(Btn, {
+  }, "Valores estimados com base na CHM 2018. O reembolso final pode variar conforme as regras de cada convênio, seguradora, contrato ou instituição, não havendo garantia de equivalência com o valor efetivamente pago ou reembolsado.")), /*#__PURE__*/React.createElement(Btn, {
     variant: "green",
     onClick: copiar,
     style: {
