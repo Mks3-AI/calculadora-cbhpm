@@ -924,7 +924,6 @@ function Orcamento(_ref0) {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       background: C.bg,
-      minHeight: "100%",
       padding: "16px 14px 40px",
       maxWidth: 580,
       margin: "0 auto",
